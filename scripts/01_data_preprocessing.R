@@ -45,3 +45,37 @@ retail_data <- retail_data %>%
 
 # Check missing values per column
 colSums(is.na(retail_data))
+
+# Filter rows where Description is NA or empty
+df_missing_description <- retail_data %>%
+  filter(is.na(Description) | Description == "")
+
+# Save them into a CSV file
+write_csv(df_missing_description, "output/missing_description_records.csv")
+
+# View how many rows have missing descriptions
+nrow(df_missing_description)
+
+# Remove rows with negative or zero quantity from main dataset
+retail_data <- retail_data %>%
+  filter(Quantity > 0)
+
+# Check missing values per column
+colSums(is.na(retail_data))
+
+# Re-create missing description dataset after filtering positive quantity
+df_missing_description <- retail_data %>%
+  filter(is.na(Description) | Description == "")
+
+# Save the cleaned missing description records
+write_csv(df_missing_description, "output/missing_description_records.csv")
+
+# Remove invalid rows: Description is NA, UnitPrice is 0, and CustomerID is NA
+retail_data <- retail_data %>%
+  filter(!(is.na(Description) & UnitPrice == 0 & is.na(CustomerID)))
+
+# Check missing values per column
+colSums(is.na(retail_data))
+
+
+
