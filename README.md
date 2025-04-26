@@ -33,23 +33,23 @@ DataMining_Coursework_OnlineRetail/
 ---
 
 ## 🛒 🛠️ Tools & Technologies Used
-R and RStudio
-Libraries:
-tidyverse
-readxl
-lubridate
-arules
-arulesViz
-dplyr
+- R and RStudio
+- Libraries:
+    - tidyverse
+    - readxl
+    - lubridate
+    - arules
+    - arulesViz
+    - dplyr
 
 ---
 
 📊 Project Tasks Overview
-Data Cleaning and Preprocessing
-Data Transformation and Scaling
-Attribute Subset Selection
-Market Basket Analysis per Country
-Business Value Summary for Each Basket
+- Data Cleaning and Preprocessing
+- Data Transformation and Scaling
+- Attribute Subset Selection
+- Market Basket Analysis per Country
+- Business Value Summary for Each Basket
 
 ---
 
