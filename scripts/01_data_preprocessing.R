@@ -57,20 +57,17 @@ nrow(df_missing_description)
 retail_data <- retail_data %>%
   filter(Quantity > 0)
 
-# Re-create missing description dataset after filtering positive quantity
-df_missing_description <- retail_data %>%
-  filter(is.na(Description) | Description == "")
-
-# Save the cleaned missing description records
-write_csv(df_missing_description, "output/missing_description_records.csv")
-
 # Remove invalid rows: Description is NA, UnitPrice is 0, and CustomerID is NA
 retail_data <- retail_data %>%
   filter(!(is.na(Description) & UnitPrice == 0 & is.na(CustomerID)))
 
-# Remove rows with missing CustomerID
+# Remove rows with missing InvoiceNo
 retail_data <- retail_data %>%
-  filter(!is.na(CustomerID))
+  filter(!is.na(InvoiceNo))
+
+# Remove rows with missing StockCode
+retail_data <- retail_data %>%
+  filter(!is.na(StockCode))
 
 # Save cleaned data set into a CSV file
 write_csv(retail_data, "output/cleaned_records.csv")
