@@ -43,9 +43,6 @@ stockcodes_to_remove <- c(
 retail_data <- retail_data %>%
   filter(!(StockCode %in% stockcodes_to_remove))
 
-# Check missing values per column
-colSums(is.na(retail_data))
-
 # Filter rows where Description is NA or empty
 df_missing_description <- retail_data %>%
   filter(is.na(Description) | Description == "")
@@ -60,9 +57,6 @@ nrow(df_missing_description)
 retail_data <- retail_data %>%
   filter(Quantity > 0)
 
-# Check missing values per column
-colSums(is.na(retail_data))
-
 # Re-create missing description dataset after filtering positive quantity
 df_missing_description <- retail_data %>%
   filter(is.na(Description) | Description == "")
@@ -74,8 +68,10 @@ write_csv(df_missing_description, "output/missing_description_records.csv")
 retail_data <- retail_data %>%
   filter(!(is.na(Description) & UnitPrice == 0 & is.na(CustomerID)))
 
-# Check missing values per column
-colSums(is.na(retail_data))
+# Remove rows with missing CustomerID
+retail_data <- retail_data %>%
+  filter(!is.na(CustomerID))
 
-
+# Save cleaned data set into a CSV file
+write_csv(retail_data, "output/cleaned_records.csv")
 
