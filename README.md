@@ -42,12 +42,16 @@ arules
 arulesViz
 dplyr
 
+---
+
 📊 Project Tasks Overview
 Data Cleaning and Preprocessing
 Data Transformation and Scaling
 Attribute Subset Selection
 Market Basket Analysis per Country
 Business Value Summary for Each Basket
+
+---
 
 🚫 Note
 The data/ folder containing the Online Retail dataset is excluded from this repository to respect file size limitations and data privacy.
