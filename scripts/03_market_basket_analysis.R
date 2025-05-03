@@ -1,3 +1,9 @@
+# ------------------------------------------------------------------------------
+# Script Name: 03_market_basket_analysis.R
+# Purpose: Perform Market Basket Analysis using Apriori on top 3 countries
+# Author: Jayampathy Balasuriya
+# ------------------------------------------------------------------------------
+
 # Load libraries
 library(tidyverse)
 library(arules)
@@ -88,5 +94,15 @@ rules_country3_top_sorted <- sort(rules_country3_top, by = "lift", decreasing = 
 inspect(head(rules_country1_top_sorted, 10))
 inspect(head(rules_country2_top_sorted, 10))
 inspect(head(rules_country3_top_sorted, 10))
+
+# Convert to data frame and save to CSV
+rules_df_country1 <- as(rules_country1_top_sorted, "data.frame")
+rules_df_country2 <- as(rules_country2_top_sorted, "data.frame")
+rules_df_country3 <- as(rules_country3_top_sorted, "data.frame")
+
+# Export to CSV
+write_csv(rules_df_country1, "output/rules_country1.csv")
+write_csv(rules_df_country2, "output/rules_country2.csv")
+write_csv(rules_df_country3, "output/rules_country3.csv")
 
 
