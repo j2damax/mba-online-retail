@@ -32,7 +32,7 @@ convert_codes_to_names <- function(rule_str) {
 generate_summary <- function(lhs, rhs, confidence, lift, support) {
   glue(
     "Customers who purchase **{lhs}** are also likely to purchase **{rhs}** ",
-    "(Confidence: {round(confidence * 100, 1)}%, Lift: {round(lift, 2)}, Support: {round(support * 100, 2)}%). "
+    "(Confidence: {round(confidence * 100, 1)}%, Lift: {round(lift, 2)}, Support: {round(support * 100, 2)}%)."
   )
 }
 
