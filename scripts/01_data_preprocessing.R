@@ -1,8 +1,13 @@
+# ------------------------------------------------------------------------------
+# Script Name: 01_data_preprocessing.R
+# Purpose: Clean Online Retail dataset for Market Basket Analysis
+# Author: Jayampathy Balasuriya
+# ------------------------------------------------------------------------------
+
 # Load libraries
 library(tidyverse)
 library(readxl)
 library(lubridate)
-library(dplyr)
 
 # Read the dataset (adjust file path if needed)
 retail_data <- read_excel("data/online_retail_data.xlsx")
@@ -18,6 +23,15 @@ summary(retail_data)
 
 # Check missing values per column
 colSums(is.na(retail_data))
+
+# Identify special StockCodes with letters or symbols
+special_stock_codes <- retail_data %>%
+  filter(str_detect(StockCode, "^[^0-9]+")) %>%
+  pull(StockCode) %>%
+  unique()
+
+# View special stock codes
+special_stock_codes
 
 # View StockCode and Description for special codes
 df_special_codes <- retail_data %>%
@@ -35,8 +49,7 @@ write_csv(df_special_codes, "output/special_stockcodes.csv")
 stockcodes_to_remove <- c(
   "POST", "D", "C2", "DOT", "M", "m", 
   "BANK CHARGES", "S", "AMAZONFEE", 
-  "gift_0001_40", "gift_0001_50", "gift_0001_30", "gift_0001_20", "gift_0001_10",
-  "gift_0001_20" # duplicate due to typo, keep
+  "gift_0001_40", "gift_0001_50", "gift_0001_30", "gift_0001_20", "gift_0001_10"
 )
 
 # Remove unwanted stock codes
