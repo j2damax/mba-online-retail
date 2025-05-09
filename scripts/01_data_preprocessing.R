@@ -9,7 +9,7 @@ library(tidyverse)
 library(readxl)
 library(lubridate)
 
-# Read the dataset (adjust file path if needed)
+# Read the dataset
 retail_data <- read_excel("data/online_retail_data.xlsx")
 
 # View first few rows

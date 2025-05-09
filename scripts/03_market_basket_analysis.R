@@ -57,22 +57,22 @@ inspect(basket_country1[1:5])
 min_support <- 0.01     # 1% of transactions
 min_confidence <- 0.5   # 50% confidence
 
-# Country 1 (Top Country - United Kindom)
+# United Kingdom (Large)
 rules_country1 <- apriori(
   basket_country1,
-  parameter = list(supp = min_support, conf = min_confidence, target = "rules")
+  parameter = list(supp = 0.015, conf = 0.65, maxlen = 4)
 )
 
-# Country 2 (Germany)
+# Germany (Medium)
 rules_country2 <- apriori(
   basket_country2,
-  parameter = list(supp = min_support, conf = min_confidence, target = "rules")
+  parameter = list(supp = 0.025, conf = 0.7, maxlen = 4)
 )
 
-# Country 3 (France)
+# France (Small)
 rules_country3 <- apriori(
   basket_country3,
-  parameter = list(supp = min_support, conf = min_confidence, target = "rules", maxlen = 15)
+  parameter = list(supp = 0.08, conf = 0.8, maxlen = 4)
 )
 
 # View summary of rules
@@ -81,24 +81,34 @@ summary(rules_country2)
 summary(rules_country3)
 
 # Filter top rules by lift (> 5) and confidence (> 0.7)
-rules_country1_top <- subset(rules_country1, lift > 5 & confidence > 0.7)
-rules_country2_top <- subset(rules_country2, lift > 5 & confidence > 0.7)
-rules_country3_top <- subset(rules_country3, lift > 5 & confidence > 0.7)
+#rules_country1_top <- subset(rules_country1, lift > 5 & confidence > 0.7)
+#rules_country2_top <- subset(rules_country2, lift > 5 & confidence > 0.7)
+#rules_country3_top <- subset(rules_country3, lift > 5 & confidence > 0.7)
+
+# Filter by Lift & Confidence
+filtered_country1 <- subset(rules_country1, lift > 5 & confidence > 0.7)
+filtered_country2 <- subset(rules_country2, lift > 5 & confidence > 0.7)
+filtered_country3 <- subset(rules_country3, lift > 6 & confidence > 0.85)
 
 # Sort top rules by lift (highest first)
-rules_country1_top_sorted <- sort(rules_country1_top, by = "lift", decreasing = TRUE)
-rules_country2_top_sorted <- sort(rules_country2_top, by = "lift", decreasing = TRUE)
-rules_country3_top_sorted <- sort(rules_country3_top, by = "lift", decreasing = TRUE)
+#rules_country1_top_sorted <- sort(rules_country1_top, by = "lift", decreasing = TRUE)
+#rules_country2_top_sorted <- sort(rules_country2_top, by = "lift", decreasing = TRUE)
+#rules_country3_top_sorted <- sort(rules_country3_top, by = "lift", decreasing = TRUE)
+
+# Sort and Save Top N Rules Only
+top_rules_country1 <- sort(filtered_country1, by = "lift", decreasing = TRUE)[1:30]
+top_rules_country2 <- sort(filtered_country2, by = "lift", decreasing = TRUE)[1:30]
+top_rules_country3 <- sort(filtered_country3, by = "lift", decreasing = TRUE)[1:30]
 
 # View top 10 rules for each country
-inspect(head(rules_country1_top_sorted, 10))
-inspect(head(rules_country2_top_sorted, 10))
-inspect(head(rules_country3_top_sorted, 10))
+inspect(head(top_rules_country1, 10))
+inspect(head(top_rules_country2, 10))
+inspect(head(top_rules_country3, 10))
 
 # Convert to data frame and save to CSV
-rules_df_country1 <- as(rules_country1_top_sorted, "data.frame")
-rules_df_country2 <- as(rules_country2_top_sorted, "data.frame")
-rules_df_country3 <- as(rules_country3_top_sorted, "data.frame")
+rules_df_country1 <- as(top_rules_country1, "data.frame")
+rules_df_country2 <- as(top_rules_country2, "data.frame")
+rules_df_country3 <- as(top_rules_country3, "data.frame")
 
 # Export to CSV
 write_csv(rules_df_country1, "output/rules_country1.csv")
